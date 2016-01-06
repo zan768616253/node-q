@@ -14,8 +14,7 @@ var ref = function (value) {
 var defer = function () {
     var tasks = [],
         state = 'pending',
-        value,
-        reason;
+        value;
 
     return {
         resolve: function (_value) {
@@ -40,6 +39,7 @@ var defer = function () {
                 var callback = function (value) {
                   defered.resolve(_callback(value));
                 };
+
                 if (tasks) {
                     value.then(function (v) {
                         console.log('defer-promise-tasks: ' + v);
