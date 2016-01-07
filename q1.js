@@ -1,11 +1,11 @@
 var ref = function (value) {
     if (value && typeof value.then === 'function') {
-        console.log('ref-value: ' + value);
+        //console.log('ref-value: ' + value);
         return value;
     }
     return {
         then: function (callback) {
-            console.log('ref-then: ' + value);
+            //console.log('ref-then: ' + value);
             return ref(callback(value));
         }
     }
@@ -41,14 +41,14 @@ var defer = function () {
                 };
 
                 if (tasks) {
-                    value.then(function (v) {
-                        console.log('defer-promise-tasks: ' + v);
-                    });
+                    //value.then(function (v) {
+                    //    console.log('defer-promise-tasks: ' + v);
+                    //});
                     tasks.push(callback);
                 } else {
-                    value.then(function (v) {
-                        console.log('defer-promise-tasks-null: ' + v);
-                    });
+                    //value.then(function (v) {
+                    //    console.log('defer-promise-tasks-null: ' + v);
+                    //});
                     value.then(callback);
                 }
                 return defered.promise;

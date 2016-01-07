@@ -9,13 +9,13 @@ var ref = function (value) {
     }
 };
 
-//var reject = function (reason) {
-//    return {
-//        then: function (callback, errback) {
-//            return ref(errback(reason));
-//        }
-//    }
-//};
+var reject = function (reason) {
+    return {
+        then: function (callback, errback) {
+            return ref(errback(reason));
+        }
+    }
+};
 
 var defer = function () {
     var tasks = [],
@@ -40,7 +40,7 @@ var defer = function () {
         },
         reject: function (reason) {
           if (tasks) {
-              value = ref(reason);
+              value = reject(reason);
               tasks.forEach(function (task) {
                  value.then.apply(value, [task[0], task[1]]);
               });
@@ -64,9 +64,8 @@ var defer = function () {
                 if (tasks) {
                     tasks.push([callback, errback]);
                 } else {
-                    // value.then(callback, errback);
                     if (state === 'rejected') {
-                        value.then(errback);
+                        value.then(callback, errback);
                     } else if (state === 'resolved') {
                         value.then(callback);
                     }
