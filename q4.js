@@ -11,7 +11,7 @@ var ref = function (value) {
         then: function (callback) {
             var defered = defer();
             nextTick(function () {
-                callback(value);
+                defered.resolve(callback(value));
             })
             return defered.promise;
         }

@@ -116,7 +116,7 @@ describe('q4', function (done) {
         promise = defered.promise;
     })
 
-    it('q3 reject should work', function (done) {
+    it('q4 reject should work', function (done) {
         setTimeout(function () {
             defered.reject('lisi');
         }, 300);
@@ -132,7 +132,7 @@ describe('q4', function (done) {
 
     it('q4 notify should work', function (done) {
         var spy = chai.spy(function (progress) {
-            console.log(progress);
+            //console.log(progress);
         });
 
         setTimeout(function () {
@@ -151,3 +151,28 @@ describe('q4', function (done) {
     })
 })
 
+describe('q5', function (done) {
+    var defer = require('../q5.js');
+
+    var defered,
+        promise;
+
+    beforeEach(function () {
+        defered = defer();
+        promise = defered.promise;
+    })
+
+    it('catch error in reject should work', function (done) {
+        setTimeout(function() {
+            defered.resolve('lisi');
+        }, 300)
+
+        promise.then(function (value) {
+            expect(value).to.eql('lisi');
+            throw 'zhangsan';
+        }).then(function () {}, function (err) {
+            expect(err).to.eql('zhangsan');
+            done();
+        });
+    })
+})
